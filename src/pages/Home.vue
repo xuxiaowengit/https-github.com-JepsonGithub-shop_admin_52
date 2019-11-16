@@ -1,10 +1,9 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <div class="home">我是home</div>
 </template>
 
 <script>
+
 export default {
 
 }
