@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 // 关闭控制台的提示信息
 Vue.config.productionTip = false
+// 使用elementui插件
+Vue.use(ElementUI)
 
 new Vue({
   router,
