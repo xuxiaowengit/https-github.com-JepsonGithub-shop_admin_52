@@ -84,7 +84,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .login {
   background-color: #2d434c;
   height: 100%;

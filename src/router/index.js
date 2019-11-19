@@ -4,6 +4,9 @@ import VueRouter from 'vue-router'
 
 import Home from '../pages/Home.vue'
 import Login from '../pages/Login.vue'
+import Users from '../pages/Users.vue'
+import Roles from '../pages/Roles.vue'
+import Rights from '../pages/Rights.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +21,7 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/home'
     },
     {
       path: '/login',
@@ -26,7 +29,31 @@ const router = new VueRouter({
     },
     {
       path: '/home',
-      component: Home
+      component: Home,
+      children: [
+        // 子路由：会自动加上父路由的路径  /home/users
+        /*
+          嵌套路由： 给某个路由配置子路由
+            1. 给路由规则加一个属性： children
+            2. 在组件提供子路由的出口 router-view
+
+          注意点：配置子路由的path的注意
+          1. 如果path是相对路径， 会自动拼上 父路由的path
+          2. 如果path是绝对路径，不会拼上父路由的path
+        */
+        {
+          path: '/users',
+          component: Users
+        },
+        {
+          path: '/roles',
+          component: Roles
+        },
+        {
+          path: '/rights',
+          component: Rights
+        }
+      ]
     }
   ]
 })
