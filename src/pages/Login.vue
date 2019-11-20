@@ -17,7 +17,8 @@
         <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
+        <!-- 如果给第三方的组件库注册原生事件，有可能注册不上，添加.native修饰符 -->
+        <el-input @keyup.enter.native="login" v-model="form.password" placeholder="请输入密码" type="password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="login">登录</el-button>
@@ -28,7 +29,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 // tab  shift + tab
 export default {
   data () {
@@ -58,26 +58,18 @@ export default {
     },
     login () {
       // 对表单进行校验
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate(async valid => {
         if (!valid) return false
-        axios({
-          method: 'post',
-          url: 'http://localhost:8888/api/private/v1/login',
-          data: this.form
-        }).then(res => {
-          // 如果成功了，需要跳转到home
-          // 如果失败，给一个提示消息
-          const { meta, data } = res.data
-          if (meta.status === 200) {
-            // 先存token
-            localStorage.setItem('token', data.token)
-            // 在跳页面
-            this.$router.push('/home')
-            this.$message.success('登录成功')
-          } else {
-            this.$message.error(meta.msg)
-          }
-        })
+        const { meta, data } = await this.$axios.post('login', this.form)
+        if (meta.status === 200) {
+          // 先存token
+          localStorage.setItem('token', data.token)
+          // 在跳页面
+          this.$router.push('/home')
+          this.$message.success('登录成功')
+        } else {
+          this.$message.error(meta.msg)
+        }
       })
     }
   }

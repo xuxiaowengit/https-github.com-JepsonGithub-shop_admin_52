@@ -51,39 +51,31 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data () {
     return {
       menuList: []
     }
   },
-  created () {
-    axios({
-      method: 'get',
-      url: 'http://localhost:8888/api/private/v1/menus',
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
-    }).then(res => {
-      const { meta, data } = res.data
-      if (meta.status === 200) {
-        this.menuList = data
-      }
-      console.log(this.menuList)
-    })
+  async created () {
+    const { meta, data } = await this.$axios.get('menus')
+    if (meta.status === 200) {
+      this.menuList = data
+    }
   },
   methods: {
-    logout () {
-      this.$confirm('你确定要退出吗?', '温馨提示', {
-        type: 'warning'
-      }).then(() => {
+    async logout () {
+      try {
+        await this.$confirm('你确定要退出吗?', '温馨提示', {
+          type: 'warning'
+        })
+        // 只要能执行到这，说明一定成功
         this.$router.push('/login')
         localStorage.removeItem('token')
         this.$message.success('退出成功')
-      }).catch(() => {
-        this.$message.info('操作取消')
-      })
+      } catch {
+        this.$message.info('取消删除')
+      }
     }
   },
   computed: {
@@ -139,7 +131,6 @@ export default {
       font-weight: 700;
       a {
         color: orange;
-
       }
     }
   }
