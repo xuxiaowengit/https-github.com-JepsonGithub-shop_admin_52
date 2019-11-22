@@ -19,4 +19,10 @@ export default {
 html, body, #app {
   height: 100%;
 }
+#app .el-breadcrumb {
+  height: 40px;
+  line-height: 40px;
+  background-color: #ddd;
+  padding-left: 10px;
+}
 </style>

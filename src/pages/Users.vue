@@ -380,12 +380,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-breadcrumb {
-  height: 40px;
-  line-height: 40px;
-  background-color: #ddd;
-  padding-left: 10px;
-}
 .search {
   width: 300px;
   margin: 10px 10px 10px 0;
