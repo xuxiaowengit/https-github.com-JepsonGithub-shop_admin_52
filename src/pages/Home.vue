@@ -52,6 +52,7 @@
 
 <script>
 export default {
+  name: 'home',
   data () {
     return {
       menuList: []
@@ -80,7 +81,10 @@ export default {
   },
   computed: {
     defaultActive () {
-      return this.$route.path.slice(1)
+      // this.$route.path => /goods  /goods-add
+      // /goods => goods
+      // /goods-add => goods
+      return this.$route.path.slice(1).split('-')[0]
     }
   }
 }
